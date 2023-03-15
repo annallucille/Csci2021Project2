@@ -21,7 +21,13 @@
 // not use deeply nested conditional structures. Seek to make the code
 // as short, and simple as possible.
 int set_batt_from_ports(batt_t* batt) {
-    return -1;
+    if(BATT_VOLTAGE_PORT>=0){
+        batt->mlvolts = BATT_VOLTAGE_PORT >> 1;
+        batt->percent = (batt->mlvolts - 3000) >> 3;
+        batt->mode = BATT_STATUS_PORT;
+        return 0;
+    }
+    return 1;
 }
 
 
