@@ -21,9 +21,27 @@
 // not use deeply nested conditional structures. Seek to make the code
 // as short, and simple as possible.
 int set_batt_from_ports(batt_t* batt) {
-    return -1;
+    if(BATT_VOLTAGE_PORT>=0){
+        batt->mlvolts = BATT_VOLTAGE_PORT >> 1;
+        batt->percent = (batt->mlvolts - 3000) >> 3;
+        batt->mode = BATT_STATUS_PORT;
+        return 0;
+    }
+    return 1;
 }
 
+int seven_segment_bitmask[10] = {
+                        0b0111111,
+                        0b0000110,
+                        0b1011011,
+                        0b1001111,
+                        0b1100110,
+                        0b1101101,
+                        0b1111101,
+                        0b0000111,
+                        0b1111111,
+                        0b1101111,
+                        };
 
 // Alters the bits of integer pointed to by 'display' to reflect the
 // data in struct param 'batt'.  Does not assume any specific bit
@@ -42,8 +60,58 @@ int set_batt_from_ports(batt_t* batt) {
 // CONSTRAINT: Limit the complexity of code as much as possible. Do
 // not use deeply nested conditional structures. Seek to make the code
 // as short, and simple as possible.
+
 int set_display_from_batt(batt_t batt, int* display) {
-    return -1;
+    // Percent
+    if (batt.mode == 1) {
+        *display = 0b1;
+
+        int nums = batt.percent;
+
+        // Right
+        *display += seven_segment_bitmask[nums % 10] << 3;
+        nums /= 10;
+
+        // Middle
+        if (nums % 10 != 0 || nums / 10 == 1) {
+            *display += seven_segment_bitmask[nums % 10] << 10;
+            nums /= 10;
+        }
+
+        // Left
+        if (nums % 10 != 0) {
+            *display += seven_segment_bitmask[nums % 10] << 17;
+        }
+    }
+    // Voltage
+    else if (batt.mode == 2) {
+        *display = 0b110;
+
+        int nums = batt.mlvolts;
+
+        if (nums % 10 >= 5) {
+            nums += 10;
+        }
+
+        nums /= 10;
+
+        // Right
+        *display += seven_segment_bitmask[nums % 10] << 3;
+        nums /= 10;
+
+        // Middle
+        *display += seven_segment_bitmask[nums % 10] << 10;
+        nums /= 10;
+
+        // Left
+        *display += seven_segment_bitmask[nums % 10] << 17;
+    }
+
+    // Battery level
+    *display += (batt.percent >= 5) << 24;
+    *display += ((1 << ((batt.percent - 30) / 20 + 1)) - 1) << 25;
+
+    return 0;
 }
 
 
