@@ -70,54 +70,121 @@ int seven_segment_bitmask[10] = {
 // as short, and simple as possible.
 
 int set_display_from_batt(batt_t batt, int* display) {
+    int data;
+
     // Percent
     if (batt.mode == 1) {
         *display = 0b1;
-
-        int nums = batt.percent;
+        data = batt.percent;
 
         // Right
-        *display += seven_segment_bitmask[nums % 10] << 3;
-        nums /= 10;
+
+        // index = data % 10;
+        // data /= 10;
+        // digit = seven_segment_bitmask[index];
+        // digit = digit << 3;
+        // result += digit;
+
+        *display += seven_segment_bitmask[data % 10] << 3;
+        data /= 10;
 
         // Middle
-        if (nums % 10 != 0 || nums / 10 == 1) {
-            *display += seven_segment_bitmask[nums % 10] << 10;
-            nums /= 10;
-        }
+        // data_temp = data;
+        // index = data % 10;
+        // data /= 10;
+        // digit = seven_segment_bitmask[index];
+        // if (data_temp == 0)
+        //     digit = 0;
+        // digit = digit << 10;
+        // result += digit;
+        
+        if (data != 0)
+            *display += seven_segment_bitmask[data % 10] << 10;
+        data /= 10;
 
         // Left
-        if (nums % 10 != 0) {
-            *display += seven_segment_bitmask[nums % 10] << 17;
-        }
+        // data_temp = data;
+        // index = data % 10;
+        // data /= 10;
+        // digit = seven_segment_bitmask[index];
+        // if (data_temp == 0)
+        //     digit = 0;
+        // digit = digit << 17;
+        // result += digit;
+
+        if (data != 0)
+            *display += seven_segment_bitmask[data % 10] << 17;
     }
-    // Voltage
+    //Voltage
     else if (batt.mode == 2) {
         *display = 0b110;
+        data = batt.mlvolts;
 
-        int nums = batt.mlvolts;
+        // Rounding
+        // int lastDigit = data % 10;
+        // data /= 10;
+        // int round = 0;
+        // if (lastDigit >= 5)
+        //     round = 1;
+        // data += round;
 
-        if (nums % 10 >= 5) {
-            nums += 10;
-        }
-
-        nums /= 10;
+        if (data % 10 >= 5) 
+            data += 10;
+        data /= 10;
 
         // Right
-        *display += seven_segment_bitmask[nums % 10] << 3;
-        nums /= 10;
+        // index = data % 10;
+        // data /= 10;
+        // digit = seven_segment_bitmask[index];
+        // digit = digit << 3;
+        // result += digit;
+
+        *display += seven_segment_bitmask[data % 10] << 3;
+        data /= 10;
 
         // Middle
-        *display += seven_segment_bitmask[nums % 10] << 10;
-        nums /= 10;
+        // index = data % 10;
+        // data /= 10;
+        // digit = seven_segment_bitmask[index];
+        // digit = digit << 10;
+        // result += digit;
+
+        *display += seven_segment_bitmask[data % 10] << 10;
+        data /= 10;
 
         // Left
-        *display += seven_segment_bitmask[nums % 10] << 17;
+        // index = data % 10;
+        // data /= 10;
+        // digit = seven_segment_bitmask[index];
+        // digit = digit << 17;
+        // result += digit;
+
+        *display += seven_segment_bitmask[data % 10] << 17;
     }
+    else return 1;
 
     // Battery level
-    *display += (batt.percent >= 5) << 24;
-    *display += ((1 << ((batt.percent - 30) / 20 + 1)) - 1) << 25;
+
+    // First bar
+    // int batteryLevel = 0;
+    // if (batt.percent >= 5) {
+    //     batteryLevel = 0x1000000;
+    // }
+    // result += batteryLevel;
+
+    if (batt.percent >= 5) 
+        *display += 0x1000000;
+    
+    // Other bars
+    // batteryLevel = batt.percent - 10;
+    // batteryLevel /= 20;
+    // batteryLevel = 1 << batteryLevel;
+    // batteryLevel -= 1;
+    // batteryLevel = batteryLevel << 25;
+    // result += batteryLevel;
+    // *display = result;
+
+    *display += ((1 << ((batt.percent - 10) / 20)) - 1) << 25;
 
     return 0;
 }
