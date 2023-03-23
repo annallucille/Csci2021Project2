@@ -23,8 +23,16 @@
 int set_batt_from_ports(batt_t* batt) {
     if(BATT_VOLTAGE_PORT>=0){
         batt->mlvolts = BATT_VOLTAGE_PORT >> 1;
-        batt->percent = (batt->mlvolts - 3000) >> 3;
-        batt->mode = BATT_STATUS_PORT;
+        batt->percent = ((batt->mlvolts) - 3000) >> 3;
+        if((batt->mlvolts) - 3000 < 0){
+            batt->percent = 0;
+        }
+        if(batt->percent > 100){
+            batt->percent = 100;
+        }
+        unsigned char b = BATT_STATUS_PORT << 3;
+        b = b >> 7;
+        batt->mode = 2 - b;
         return 0;
     }
     return 1;
@@ -125,5 +133,10 @@ int set_display_from_batt(batt_t batt, int* display) {
 // available on the target microcontroller.  Uses stack and global
 // memory only.
 int batt_update() {
-    return -1;
+    batt_t batt;
+    int ret = set_batt_from_ports(&batt);
+    if(ret == 0){
+        set_display_from_batt(batt, &BATT_DISPLAY_PORT);
+    }
+    return ret;
 }
