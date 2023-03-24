@@ -72,34 +72,34 @@ ACTUAL:  38) |     |
 ACTUAL:  39) +-----+                        
 
 --- Valgrind Log from: test-results/raw/prob1-20-valgrd.tmp ---
-==2187238== Memcheck, a memory error detector
-==2187238== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2187238== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==2187238== Command: ./test_batt_update set_display_from_batt()\ 100\ %
-==2187238== Parent PID: 2187237
-==2187238== 
-==2187238== Conditional jump or move depends on uninitialised value(s)
-==2187238==    at 0x10B73A: bitstr (batt_sim.c:166)
-==2187238==    by 0x10A70B: main (test_batt_update.c:371)
-==2187238==  Uninitialised value was created by a heap allocation
-==2187238==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2187238==    by 0x109373: main (test_batt_update.c:39)
-==2187238== 
-==2187238== Conditional jump or move depends on uninitialised value(s)
-==2187238==    at 0x10B56C: set_batt_display (batt_sim.c:122)
-==2187238==    by 0x10B694: print_batt_display (batt_sim.c:140)
-==2187238==    by 0x10A773: main (test_batt_update.c:377)
-==2187238==  Uninitialised value was created by a heap allocation
-==2187238==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2187238==    by 0x109373: main (test_batt_update.c:39)
-==2187238== 
-==2187238== 
-==2187238== HEAP SUMMARY:
-==2187238==     in use at exit: 0 bytes in 0 blocks
-==2187238==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
-==2187238== 
-==2187238== All heap blocks were freed -- no leaks are possible
-==2187238== 
-==2187238== For lists of detected and suppressed errors, rerun with: -s
-==2187238== ERROR SUMMARY: 62 errors from 2 contexts (suppressed: 0 from 0)
+==2198240== Memcheck, a memory error detector
+==2198240== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2198240== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==2198240== Command: ./test_batt_update set_display_from_batt()\ 100\ %
+==2198240== Parent PID: 2198239
+==2198240== 
+==2198240== Conditional jump or move depends on uninitialised value(s)
+==2198240==    at 0x10B73A: bitstr (batt_sim.c:166)
+==2198240==    by 0x10A70B: main (test_batt_update.c:371)
+==2198240==  Uninitialised value was created by a heap allocation
+==2198240==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2198240==    by 0x109373: main (test_batt_update.c:39)
+==2198240== 
+==2198240== Conditional jump or move depends on uninitialised value(s)
+==2198240==    at 0x10B56C: set_batt_display (batt_sim.c:122)
+==2198240==    by 0x10B694: print_batt_display (batt_sim.c:140)
+==2198240==    by 0x10A773: main (test_batt_update.c:377)
+==2198240==  Uninitialised value was created by a heap allocation
+==2198240==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2198240==    by 0x109373: main (test_batt_update.c:39)
+==2198240== 
+==2198240== 
+==2198240== HEAP SUMMARY:
+==2198240==     in use at exit: 0 bytes in 0 blocks
+==2198240==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
+==2198240== 
+==2198240== All heap blocks were freed -- no leaks are possible
+==2198240== 
+==2198240== For lists of detected and suppressed errors, rerun with: -s
+==2198240== ERROR SUMMARY: 62 errors from 2 contexts (suppressed: 0 from 0)
 

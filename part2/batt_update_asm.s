@@ -95,4 +95,15 @@ set_display_from_batt:
    
 # ENTRY POINT FOR REQUIRED FUNCTION
 batt_update:
-	## assembly instructions here
+    movq $0, %rdi
+    call set_batt_from_ports
+    cmpl $0, %eax
+    jmp L32
+
+L31: 
+    call set_display_from_batt
+    ret
+
+L32:
+    call set_display_from_batt
+    ret 

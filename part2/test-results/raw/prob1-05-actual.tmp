@@ -15,7 +15,7 @@ ret: 0
 actual = {
   ->mlvolts = 3750,
   ->percent = 93,
-  ->mode    = 0,
+  ->mode    = 2,
 }
 BATT_VOLTAGE_PORT  : 7500
 BATT_STATUS_PORT   : 101 01001
