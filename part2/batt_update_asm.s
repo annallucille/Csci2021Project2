@@ -23,17 +23,18 @@ set_batt_from_ports:
 ### Change to definint semi-global variables used with the next function 
 ### via the '.data' directive
 .data
-	
-my_int:                     # declare location an single integer named 'my_int'
-    .int 1234               # value 1234
 
-other_int:                  # declare another int accessible via name 'other_int'
-    .int 0b0101             # binary value as per C
-
-my_array:                   # declare multiple ints sequentially starting at location
-    .int 10                 # 'my_array' for an array. Each are spaced 4 bytes from the
-    .int 0x00014            # next and can be given values using the same prefixes as 
-    .int 0b11110            # are understood by gcc.
+seven_segment_bitmask:
+    .int 0b0111111
+    .int 0b0000110
+    .int 0b1011011
+    .int 0b1001111
+    .int 0b1100110
+    .int 0b1101101
+    .int 0b1111101
+    .int 0b0000111
+    .int 0b1111111
+    .int 0b1101111
 
 
 # WARNING: Don't forget to switch back to .text as below
