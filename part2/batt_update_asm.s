@@ -8,7 +8,47 @@
         
 # ENTRY POINT FOR REQUIRED FUNCTION
 set_batt_from_ports:
-    ## assembly instructions here
+    movw  BATT_VOLTAGE_PORT(%rip), %dx  
+    cmpw  $0, %dx
+    jl	L7
+
+L1:
+    sarw  $1, %dx
+    movw  %dx, 0(%rdi)        ## 0(%rdi) == batt->mvolts
+    subw  $3000, %dx
+    cmpw  $0, %dx
+    jl L4
+
+L2:
+    sarw  $3, %dx
+    cmpw $100, %dx
+    jg L5
+
+L3:
+    movw %dx, 2(%rdi)
+    jmp L6
+
+L4:
+    movb  $0, 2(%rdi)
+    jmp L6
+
+L5:
+    movb  $100, 2(%rdi)
+    
+L6:
+    movb BATT_STATUS_PORT(%rip), %dl  ##stores BATT_STATUS in %edx
+    shlb  $3, %dl
+    shrb  $7, %dl
+    subb  $2, %dl
+    negb  %dl
+    movb  %dl, 3(%rdi)
+    movl $0, %eax
+    ret
+  
+L7:
+    movl $1, %eax
+    ret
+
 
     ## a useful technique for this problem
     ## movX    SOME_GLOBAL_VAR(%rip), %reg
@@ -185,4 +225,15 @@ both:
    
 # ENTRY POINT FOR REQUIRED FUNCTION
 batt_update:
-	## assembly instructions here
+    movq $0, %rdi
+    call set_batt_from_ports
+    cmpl $0, %eax
+    jmp L32
+
+L31: 
+    call set_display_from_batt
+    ret
+
+L32:
+    call set_display_from_batt
+    ret 

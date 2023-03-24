@@ -1,0 +1,43 @@
+==2203091== Memcheck, a memory error detector
+==2203091== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2203091== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==2203091== Command: ./test_batt_update batt_update()\ 7291\ P
+==2203091== Parent PID: 2203090
+==2203091== 
+==2203091== Invalid write of size 2
+==2203091==    at 0x10B901: ??? (batt_update_asm.s:17)
+==2203091==    by 0x48D6082: (below main) (libc-start.c:308)
+==2203091==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==2203091== 
+==2203091== 
+==2203091== Process terminating with default action of signal 11 (SIGSEGV)
+==2203091==  Access not within mapped region at address 0x0
+==2203091==    at 0x10B901: ??? (batt_update_asm.s:17)
+==2203091==    by 0x48D6082: (below main) (libc-start.c:308)
+==2203091==  If you believe this happened as a result of a stack
+==2203091==  overflow in your program's main thread (unlikely but
+==2203091==  possible), you can try to increase the size of the
+==2203091==  main thread stack using the --main-stacksize= flag.
+==2203091==  The main thread stack size used in this run was 8388608.
+==2203091== 
+==2203091== HEAP SUMMARY:
+==2203091==     in use at exit: 8 bytes in 2 blocks
+==2203091==   total heap usage: 2 allocs, 0 frees, 8 bytes allocated
+==2203091== 
+==2203091== 4 bytes in 1 blocks are still reachable in loss record 1 of 2
+==2203091==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2203091==    by 0x109373: main (test_batt_update.c:39)
+==2203091== 
+==2203091== 4 bytes in 1 blocks are still reachable in loss record 2 of 2
+==2203091==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2203091==    by 0x109384: main (test_batt_update.c:40)
+==2203091== 
+==2203091== LEAK SUMMARY:
+==2203091==    definitely lost: 0 bytes in 0 blocks
+==2203091==    indirectly lost: 0 bytes in 0 blocks
+==2203091==      possibly lost: 0 bytes in 0 blocks
+==2203091==    still reachable: 8 bytes in 2 blocks
+==2203091==         suppressed: 0 bytes in 0 blocks
+==2203091== 
+==2203091== For lists of detected and suppressed errors, rerun with: -s
+==2203091== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
