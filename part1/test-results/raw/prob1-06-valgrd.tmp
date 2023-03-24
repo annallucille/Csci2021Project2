@@ -1,15 +1,15 @@
-==664717== Memcheck, a memory error detector
-==664717== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==664717== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==664717== Command: ./test_batt_update set_batt_from_ports()\ mixed\ STATUS\ P
-==664717== Parent PID: 664716
-==664717== 
-==664717== 
-==664717== HEAP SUMMARY:
-==664717==     in use at exit: 0 bytes in 0 blocks
-==664717==   total heap usage: 1 allocs, 1 frees, 4 bytes allocated
-==664717== 
-==664717== All heap blocks were freed -- no leaks are possible
-==664717== 
-==664717== For lists of detected and suppressed errors, rerun with: -s
-==664717== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==672830== Memcheck, a memory error detector
+==672830== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==672830== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==672830== Command: ./test_batt_update set_batt_from_ports()\ mixed\ STATUS\ P
+==672830== Parent PID: 672829
+==672830== 
+==672830== 
+==672830== HEAP SUMMARY:
+==672830==     in use at exit: 0 bytes in 0 blocks
+==672830==   total heap usage: 1 allocs, 1 frees, 4 bytes allocated
+==672830== 
+==672830== All heap blocks were freed -- no leaks are possible
+==672830== 
+==672830== For lists of detected and suppressed errors, rerun with: -s
+==672830== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
