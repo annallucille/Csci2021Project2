@@ -1,0 +1,30 @@
+==2198390== Memcheck, a memory error detector
+==2198390== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2198390== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==2198390== Command: ./test_batt_update set_display_from_batt()\ level\ 4
+==2198390== Parent PID: 2198389
+==2198390== 
+==2198390== Conditional jump or move depends on uninitialised value(s)
+==2198390==    at 0x10B73A: bitstr (batt_sim.c:166)
+==2198390==    by 0x10AC33: main (test_batt_update.c:460)
+==2198390==  Uninitialised value was created by a heap allocation
+==2198390==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2198390==    by 0x109373: main (test_batt_update.c:39)
+==2198390== 
+==2198390== Conditional jump or move depends on uninitialised value(s)
+==2198390==    at 0x10B56C: set_batt_display (batt_sim.c:122)
+==2198390==    by 0x10B694: print_batt_display (batt_sim.c:140)
+==2198390==    by 0x10AC9B: main (test_batt_update.c:466)
+==2198390==  Uninitialised value was created by a heap allocation
+==2198390==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2198390==    by 0x109373: main (test_batt_update.c:39)
+==2198390== 
+==2198390== 
+==2198390== HEAP SUMMARY:
+==2198390==     in use at exit: 0 bytes in 0 blocks
+==2198390==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
+==2198390== 
+==2198390== All heap blocks were freed -- no leaks are possible
+==2198390== 
+==2198390== For lists of detected and suppressed errors, rerun with: -s
+==2198390== ERROR SUMMARY: 62 errors from 2 contexts (suppressed: 0 from 0)
