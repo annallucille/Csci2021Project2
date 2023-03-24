@@ -1,0 +1,104 @@
+* (TEST 18) set_display_from_batt() 87 %
+COMMENTS:
+** program: ./test_batt_update "set_display_from_batt() 87 %"
+
+** --- Failure messages --- 
+- FAILURE(13): Valgrind detected errors
+- FAILURE: Output Mismatch at lines marked
+
+** --- Side by Side Differences ---
+- Expect output in: test-results/raw/prob1-18-expect.tmp
+- Actual output in: test-results/raw/prob1-18-actual.tmp
+- Differing lines have a character like '|' '>' or '<' in the middle
+#+BEGIN_SRC sbs-diff
+==== EXPECT ====                                             ==== ACTUAL ====                                          
+{                                                            {
+    // Show 87 %                                                 // Show 87 %
+    BATT_VOLTAGE_PORT = -1;                                      BATT_VOLTAGE_PORT = -1;
+    BATT_STATUS_PORT  = -1;                                      BATT_STATUS_PORT  = -1;
+    BATT_DISPLAY_PORT = -1;                                      BATT_DISPLAY_PORT = -1;
+    batt_t batt = {                                              batt_t batt = {
+      .mlvolts = 3700,                                             .mlvolts = 3700,
+      .percent = 87,                                               .percent = 87,
+      .mode = 1,                                                   .mode = 1,
+    };                                                           };
+    int ret = set_display_from_batt(batt, dispint);              int ret = set_display_from_batt(batt, dispint);
+    printf("ret: %d\n",ret);                                     printf("ret: %d\n",ret);
+    printf("%-18s : %s\n%-18s : %s\n",                           printf("%-18s : %s\n%-18s : %s\n",
+           "dispint bits", bitstr(*dispint, INT_BITS),                  "dispint bits", bitstr(*dispint, INT_BITS),
+           "index", bitstr_index(INT_BITS));                            "index", bitstr_index(INT_BITS));
+    printf("\n");  print_ports();  printf("\n");                 printf("\n");  print_ports();  printf("\n");
+    BATT_DISPLAY_PORT = *dispint;                                BATT_DISPLAY_PORT = *dispint;
+    printf("Display based on dispint:\n");                       printf("Display based on dispint:\n");
+    print_batt_display();                                        print_batt_display();
+}                                                            }
+---OUTPUT---                                                 ---OUTPUT---
+ret: 0                                                       ret: 0
+dispint bits       : 000 01111 0000000 1111111 0000111 001 | dispint bits       : 000 00000 0000000 0000000 0000000 000
+index              :  29    24      17      10       3   0   index              :  29    24      17      10       3   0
+
+BATT_VOLTAGE_PORT  : -1                                      BATT_VOLTAGE_PORT  : -1
+BATT_STATUS_PORT   : 111 11111                               BATT_STATUS_PORT   : 111 11111
+BATT_DISPLAY_PORT  : 111 11111 1111111 1111111 1111111 111   BATT_DISPLAY_PORT  : 111 11111 1111111 1111111 1111111 111
+index              :  29    24      17      10       3   0   index              :  29    24      17      10       3   0
+
+Display based on dispint:                                    Display based on dispint:
++-^^^-+         ####  ####                                 | +-^^^-+                        
+|     |         #  #     #                                 | |     |                        
+|#####|         #  #     #                                 | |     |                        
+|#####|         ####     #                                 | |     |                        
+|#####|         #  #     #  %                              | |     |                        
+|#####|         #  #     #                                 | |     |                        
++-----+         ####     #                                 | +-----+                        
+#+END_SRC
+
+** --- Line Differences ---
+EXPECT:  23) dispint bits       : 000 01111 0000000 1111111 0000111 001
+ACTUAL:  23) dispint bits       : 000 00000 0000000 0000000 0000000 000
+EXPECT:  32) +-^^^-+         ####  ####     
+EXPECT:  33) |     |         #  #     #     
+EXPECT:  34) |#####|         #  #     #     
+EXPECT:  35) |#####|         ####     #     
+EXPECT:  36) |#####|         #  #     #  %  
+EXPECT:  37) |#####|         #  #     #     
+EXPECT:  38) +-----+         ####     #     
+ACTUAL:  32) +-^^^-+                        
+ACTUAL:  33) |     |                        
+ACTUAL:  34) |     |                        
+ACTUAL:  35) |     |                        
+ACTUAL:  36) |     |                        
+ACTUAL:  37) |     |                        
+ACTUAL:  38) +-----+                        
+
+--- Valgrind Log from: test-results/raw/prob1-18-valgrd.tmp ---
+==2187169== Memcheck, a memory error detector
+==2187169== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2187169== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==2187169== Command: ./test_batt_update set_display_from_batt()\ 87\ %
+==2187169== Parent PID: 2187168
+==2187169== 
+==2187169== Conditional jump or move depends on uninitialised value(s)
+==2187169==    at 0x10B73A: bitstr (batt_sim.c:166)
+==2187169==    by 0x10A477: main (test_batt_update.c:326)
+==2187169==  Uninitialised value was created by a heap allocation
+==2187169==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2187169==    by 0x109373: main (test_batt_update.c:39)
+==2187169== 
+==2187169== Conditional jump or move depends on uninitialised value(s)
+==2187169==    at 0x10B56C: set_batt_display (batt_sim.c:122)
+==2187169==    by 0x10B694: print_batt_display (batt_sim.c:140)
+==2187169==    by 0x10A4DF: main (test_batt_update.c:332)
+==2187169==  Uninitialised value was created by a heap allocation
+==2187169==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2187169==    by 0x109373: main (test_batt_update.c:39)
+==2187169== 
+==2187169== 
+==2187169== HEAP SUMMARY:
+==2187169==     in use at exit: 0 bytes in 0 blocks
+==2187169==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
+==2187169== 
+==2187169== All heap blocks were freed -- no leaks are possible
+==2187169== 
+==2187169== For lists of detected and suppressed errors, rerun with: -s
+==2187169== ERROR SUMMARY: 62 errors from 2 contexts (suppressed: 0 from 0)
+

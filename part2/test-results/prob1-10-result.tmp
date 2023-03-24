@@ -1,0 +1,57 @@
+* (TEST 10) set_batt_from_ports() 6016 V
+COMMENTS:
+** program: ./test_batt_update "set_batt_from_ports() 6016 V"
+
+** --- Failure messages --- 
+- FAILURE: Output Mismatch at lines marked
+
+** --- Side by Side Differences ---
+- Expect output in: test-results/raw/prob1-10-expect.tmp
+- Actual output in: test-results/raw/prob1-10-actual.tmp
+- Differing lines have a character like '|' '>' or '<' in the middle
+#+BEGIN_SRC sbs-diff
+==== EXPECT ====                                             ==== ACTUAL ====                                          
+{                                                            {
+    // Low voltage sensor value should yield 1%                  // Low voltage sensor value should yield 1%
+    BATT_VOLTAGE_PORT = 6016;                                    BATT_VOLTAGE_PORT = 6016;
+    BATT_STATUS_PORT  = 0b101100;                                BATT_STATUS_PORT  = 0b101100;
+    BATT_DISPLAY_PORT = -1;                                      BATT_DISPLAY_PORT = -1;
+    int ret = set_batt_from_ports(actual_batt);                  int ret = set_batt_from_ports(actual_batt);
+    printf("ret: %d\n",ret);                                     printf("ret: %d\n",ret);
+    printf("actual = "); print_batt(actual_batt);                printf("actual = "); print_batt(actual_batt);
+    print_ports();                                               print_ports();
+}                                                            }
+---OUTPUT---                                                 ---OUTPUT---
+ret: 0                                                       ret: 0
+actual = {                                                   actual = {
+  ->mlvolts = 3008,                                            ->mlvolts = 3008,
+  ->percent = 1,                                               ->percent = 1,
+  ->mode    = 2,                                           |   ->mode    = 0,
+}                                                            }
+BATT_VOLTAGE_PORT  : 6016                                    BATT_VOLTAGE_PORT  : 6016
+BATT_STATUS_PORT   : 001 01100                               BATT_STATUS_PORT   : 001 01100
+BATT_DISPLAY_PORT  : 111 11111 1111111 1111111 1111111 111   BATT_DISPLAY_PORT  : 111 11111 1111111 1111111 1111111 111
+index              :  29    24      17      10       3   0   index              :  29    24      17      10       3   0
+#+END_SRC
+
+** --- Line Differences ---
+EXPECT:  16)   ->mode    = 2,
+ACTUAL:  16)   ->mode    = 0,
+
+--- Valgrind Log from: test-results/raw/prob1-10-valgrd.tmp ---
+==2186885== Memcheck, a memory error detector
+==2186885== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2186885== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==2186885== Command: ./test_batt_update set_batt_from_ports()\ 6016\ V
+==2186885== Parent PID: 2186884
+==2186885== 
+==2186885== 
+==2186885== HEAP SUMMARY:
+==2186885==     in use at exit: 0 bytes in 0 blocks
+==2186885==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
+==2186885== 
+==2186885== All heap blocks were freed -- no leaks are possible
+==2186885== 
+==2186885== For lists of detected and suppressed errors, rerun with: -s
+==2186885== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
