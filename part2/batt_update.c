@@ -39,7 +39,7 @@
 }
 */
 
-int seven_segment_bitmask[10] = {
+/*int seven_segment_bitmask[10] = {
                         0b0111111,
                         0b0000110,
                         0b1011011,
@@ -50,7 +50,7 @@ int seven_segment_bitmask[10] = {
                         0b0000111,
                         0b1111111,
                         0b1101111,
-                        };
+                        };*/
 
 // Alters the bits of integer pointed to by 'display' to reflect the
 // data in struct param 'batt'.  Does not assume any specific bit
@@ -70,7 +70,7 @@ int seven_segment_bitmask[10] = {
 // not use deeply nested conditional structures. Seek to make the code
 // as short, and simple as possible.
 
-int set_display_from_batt(batt_t batt, int* display) {
+/*int set_display_from_batt(batt_t batt, int* display) {
     // Percent
     if (batt.mode == 1) {
         *display = 0b1;
@@ -121,7 +121,7 @@ int set_display_from_batt(batt_t batt, int* display) {
     *display += ((1 << ((batt.percent - 30) / 20 + 1)) - 1) << 25;
 
     return 0;
-}
+}*/
 
 
 // Called to update the battery meter display.  Makes use of
@@ -133,7 +133,7 @@ int set_display_from_batt(batt_t batt, int* display) {
 // CONSTRAINT: Does not allocate any heap memory as malloc() is NOT
 // available on the target microcontroller.  Uses stack and global
 // memory only.
-int batt_update() {
+/*int batt_update() {
     batt_t batt;
     int ret = set_batt_from_ports(&batt);
     if(ret == 0){
@@ -141,4 +141,4 @@ int batt_update() {
         return ret;
     }
     return ret;
-}
+}*/

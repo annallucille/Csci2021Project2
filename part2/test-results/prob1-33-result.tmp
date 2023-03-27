@@ -1,8 +1,9 @@
-* (TEST 33) ./batt_main 6949 V
+* (TEST 33) ./hybrid_main 6949 V
 COMMENTS:
-** program: ./batt_main 6949 V
+** program: ./hybrid_main 6949 V
 
 ** --- Failure messages --- 
+- FAILURE(139) due to SIGSEGV (segmentation fault) from OS
 - FAILURE: Output Mismatch at lines marked
 
 ** --- Side by Side Differences ---
@@ -25,30 +26,33 @@ batt = {                                          batt = {
 result = set_display_from_batt(batt, &display);   result = set_display_from_batt(batt, &display);
 result: 0                                         result: 0
 display is                                        display is
-bits:  000 00111 1001111 1100110 0000111 110    | bits:  000 00000 0000000 0000000 0000000 000
+bits:  000 00111 1001111 1100110 0000111 110      bits:  000 00111 1001111 1100110 0000111 110
 index:  29    24      17      10       3   0      index:  29    24      17      10       3   0
 
-result = batt_update();                           result = batt_update();
-result: 0                                         result: 0
-BATT_DISPLAY_PORT is                              BATT_DISPLAY_PORT is
-bits:  000 00111 1001111 1100110 0000111 110    | bits:  000 00000 0000000 0000000 0000000 000
-index:  29    24      17      10       3   0      index:  29    24      17      10       3   0
-
-Battery Meter Display:                            Battery Meter Display:
-+-^^^-+  ####   #  #  ####                      | +-^^^-+                        
-|     |     #   #  #     #                      | |     |                        
-|     |     #   #  #     #                      | |     |                        
-|#####|  ####   ####     #  V                   | |     |                        
-|#####|     #      #     #                      | |     |                        
-|#####|     #      #     #                      | |     |                        
-+-----+  #### o    #     #                      | +-----+                        
+result = batt_update();                         <
+result: 0                                       <
+BATT_DISPLAY_PORT is                            <
+bits:  000 00111 1001111 1100110 0000111 110    <
+index:  29    24      17      10       3   0    <
+                                                <
+Battery Meter Display:                          <
++-^^^-+  ####   #  #  ####                      <
+|     |     #   #  #     #                      <
+|     |     #   #  #     #                      <
+|#####|  ####   ####     #  V                   <
+|#####|     #      #     #                      <
+|#####|     #      #     #                      <
++-----+  #### o    #     #                      <
 #+END_SRC
 
 ** --- Line Differences ---
-EXPECT:  15) bits:  000 00111 1001111 1100110 0000111 110
-ACTUAL:  15) bits:  000 00000 0000000 0000000 0000000 000
+EXPECT:  18) result = batt_update();
+EXPECT:  19) result: 0
+EXPECT:  20) BATT_DISPLAY_PORT is
 EXPECT:  21) bits:  000 00111 1001111 1100110 0000111 110
-ACTUAL:  21) bits:  000 00000 0000000 0000000 0000000 000
+EXPECT:  22) index:  29    24      17      10       3   0
+EXPECT:  23) 
+EXPECT:  24) Battery Meter Display:
 EXPECT:  25) +-^^^-+  ####   #  #  ####     
 EXPECT:  26) |     |     #   #  #     #     
 EXPECT:  27) |     |     #   #  #     #     
@@ -56,28 +60,36 @@ EXPECT:  28) |#####|  ####   ####     #  V
 EXPECT:  29) |#####|     #      #     #     
 EXPECT:  30) |#####|     #      #     #     
 EXPECT:  31) +-----+  #### o    #     #     
-ACTUAL:  25) +-^^^-+                        
-ACTUAL:  26) |     |                        
-ACTUAL:  27) |     |                        
-ACTUAL:  28) |     |                        
-ACTUAL:  29) |     |                        
-ACTUAL:  30) |     |                        
-ACTUAL:  31) +-----+                        
 
 --- Valgrind Log from: test-results/raw/prob1-33-valgrd.tmp ---
-==2199000== Memcheck, a memory error detector
-==2199000== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2199000== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==2199000== Command: ./batt_main 6949 V
-==2199000== Parent PID: 2198999
-==2199000== 
-==2199000== 
-==2199000== HEAP SUMMARY:
-==2199000==     in use at exit: 0 bytes in 0 blocks
-==2199000==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==2199000== 
-==2199000== All heap blocks were freed -- no leaks are possible
-==2199000== 
-==2199000== For lists of detected and suppressed errors, rerun with: -s
-==2199000== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==3888234== Memcheck, a memory error detector
+==3888234== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3888234== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==3888234== Command: ./hybrid_main 6949 V
+==3888234== Parent PID: 3888233
+==3888234== 
+==3888234== Invalid write of size 2
+==3888234==    at 0x109A8B: ??? (batt_update_asm.s:17)
+==3888234==    by 0x48D6082: (below main) (libc-start.c:308)
+==3888234==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==3888234== 
+==3888234== 
+==3888234== Process terminating with default action of signal 11 (SIGSEGV)
+==3888234==  Access not within mapped region at address 0x0
+==3888234==    at 0x109A8B: ??? (batt_update_asm.s:17)
+==3888234==    by 0x48D6082: (below main) (libc-start.c:308)
+==3888234==  If you believe this happened as a result of a stack
+==3888234==  overflow in your program's main thread (unlikely but
+==3888234==  possible), you can try to increase the size of the
+==3888234==  main thread stack using the --main-stacksize= flag.
+==3888234==  The main thread stack size used in this run was 8388608.
+==3888234== 
+==3888234== HEAP SUMMARY:
+==3888234==     in use at exit: 0 bytes in 0 blocks
+==3888234==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==3888234== 
+==3888234== All heap blocks were freed -- no leaks are possible
+==3888234== 
+==3888234== For lists of detected and suppressed errors, rerun with: -s
+==3888234== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
 

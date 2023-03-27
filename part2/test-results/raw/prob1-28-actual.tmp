@@ -10,7 +10,7 @@
     print_batt_display();
 }
 ---OUTPUT---
-ret: 0
+ret: 1
 
 BATT_VOLTAGE_PORT  : 7400
 BATT_STATUS_PORT   : 000 10100

@@ -1,6 +1,6 @@
 * (TEST 28) batt_update() 7400 V
 COMMENTS:
-** program: ./test_batt_update "batt_update() 7400 V"
+** program: ./test_hybrid_batt_update "batt_update() 7400 V"
 
 ** --- Failure messages --- 
 - FAILURE: Output Mismatch at lines marked
@@ -23,7 +23,7 @@ COMMENTS:
     print_batt_display();                                        print_batt_display();
 }                                                            }
 ---OUTPUT---                                                 ---OUTPUT---
-ret: 0                                                       ret: 0
+ret: 0                                                     | ret: 1
 
 BATT_VOLTAGE_PORT  : 7400                                    BATT_VOLTAGE_PORT  : 7400
 BATT_STATUS_PORT   : 000 10100                               BATT_STATUS_PORT   : 000 10100
@@ -41,6 +41,8 @@ Display based on BATT_DISPLAY_PORT:                          Display based on BA
 #+END_SRC
 
 ** --- Line Differences ---
+EXPECT:  13) ret: 0
+ACTUAL:  13) ret: 1
 EXPECT:  17) BATT_DISPLAY_PORT  : 000 01111 0000000 1111111 0000111 001
 ACTUAL:  17) BATT_DISPLAY_PORT  : 111 11111 1111111 1111111 1111111 111
 EXPECT:  21) +-^^^-+         ####  ####     
@@ -59,19 +61,19 @@ ACTUAL:  26) |#####|  #  #   #  #  #  #
 ACTUAL:  27) +-----+  #### o ####  ####     
 
 --- Valgrind Log from: test-results/raw/prob1-28-valgrd.tmp ---
-==2198559== Memcheck, a memory error detector
-==2198559== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2198559== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==2198559== Command: ./test_batt_update batt_update()\ 7400\ V
-==2198559== Parent PID: 2198549
-==2198559== 
-==2198559== 
-==2198559== HEAP SUMMARY:
-==2198559==     in use at exit: 0 bytes in 0 blocks
-==2198559==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
-==2198559== 
-==2198559== All heap blocks were freed -- no leaks are possible
-==2198559== 
-==2198559== For lists of detected and suppressed errors, rerun with: -s
-==2198559== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==3961422== Memcheck, a memory error detector
+==3961422== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3961422== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==3961422== Command: ./test_hybrid_batt_update batt_update()\ 7400\ V
+==3961422== Parent PID: 3961421
+==3961422== 
+==3961422== 
+==3961422== HEAP SUMMARY:
+==3961422==     in use at exit: 0 bytes in 0 blocks
+==3961422==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
+==3961422== 
+==3961422== All heap blocks were freed -- no leaks are possible
+==3961422== 
+==3961422== For lists of detected and suppressed errors, rerun with: -s
+==3961422== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
 
