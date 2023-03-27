@@ -25,7 +25,7 @@ L2:
     jg L5
 
 L3:
-    movw %dx, 2(%rdi)
+    movw %dx, 2(%rdi)  ## stores percent in offset 2
     jmp L6
 
 L4:
@@ -36,7 +36,7 @@ L5:
     movb  $100, 2(%rdi)
     
 L6:
-    movb BATT_STATUS_PORT(%rip), %dl  ##stores BATT_STATUS in %edx
+    movb BATT_STATUS_PORT(%rip), %dl  ##stores BATT_STATUS in %dl
     shlb  $3, %dl
     shrb  $7, %dl
     subb  $2, %dl
@@ -59,10 +59,6 @@ L7:
     #    movb / movw / movl / movq 
     # and appropriately sized destination register                                            
 
-
-### Change to definint semi-global variables used with the next function 
-### via the '.data' directive
-.data
 
 seven_segment_bitmask:
     .int 0b0111111
@@ -218,22 +214,28 @@ both:
     movl %r8d, (%rsi)                          # *display = result
     movq $0, %rax                              # return 0
     ret
+ 
+
 
 
 .text
-.global batt_update
-   
+.global  batt_update
+
 # ENTRY POINT FOR REQUIRED FUNCTION
 batt_update:
-    movq $0, %rdi
-    call set_batt_from_ports
-    cmpl $0, %eax
-    jmp L32
+    subq  $8, %rsp
+    movq  %rsp, %rdi
+    call  set_batt_from_ports
+    cmpl  $0, %eax
+    jg  L32
 
-L31: 
-    call set_display_from_batt
-    ret
+L31:
+    movq  %rsp, (%rdi)                                          ## call data in stack
+                  ## store batt display addy in rsi
+    call  set_display_from_batt 
+    addq  $8, %rsp
+    ret 
 
 L32:
-    call set_display_from_batt
-    ret 
+    addq  $8, %rsp
+    ret

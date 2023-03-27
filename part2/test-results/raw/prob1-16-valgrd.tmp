@@ -1,30 +1,15 @@
-==2198087== Memcheck, a memory error detector
-==2198087== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2198087== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==2198087== Command: ./test_batt_update set_display_from_batt()\ 3.507\ V
-==2198087== Parent PID: 2198086
-==2198087== 
-==2198087== Conditional jump or move depends on uninitialised value(s)
-==2198087==    at 0x10B73A: bitstr (batt_sim.c:166)
-==2198087==    by 0x10A1E3: main (test_batt_update.c:282)
-==2198087==  Uninitialised value was created by a heap allocation
-==2198087==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2198087==    by 0x109373: main (test_batt_update.c:39)
-==2198087== 
-==2198087== Conditional jump or move depends on uninitialised value(s)
-==2198087==    at 0x10B56C: set_batt_display (batt_sim.c:122)
-==2198087==    by 0x10B694: print_batt_display (batt_sim.c:140)
-==2198087==    by 0x10A24B: main (test_batt_update.c:288)
-==2198087==  Uninitialised value was created by a heap allocation
-==2198087==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==2198087==    by 0x109373: main (test_batt_update.c:39)
-==2198087== 
-==2198087== 
-==2198087== HEAP SUMMARY:
-==2198087==     in use at exit: 0 bytes in 0 blocks
-==2198087==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
-==2198087== 
-==2198087== All heap blocks were freed -- no leaks are possible
-==2198087== 
-==2198087== For lists of detected and suppressed errors, rerun with: -s
-==2198087== ERROR SUMMARY: 62 errors from 2 contexts (suppressed: 0 from 0)
+==3887149== Memcheck, a memory error detector
+==3887149== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3887149== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==3887149== Command: ./test_hybrid_batt_update set_display_from_batt()\ 3.507\ V
+==3887149== Parent PID: 3887148
+==3887149== 
+==3887149== 
+==3887149== HEAP SUMMARY:
+==3887149==     in use at exit: 0 bytes in 0 blocks
+==3887149==   total heap usage: 2 allocs, 2 frees, 8 bytes allocated
+==3887149== 
+==3887149== All heap blocks were freed -- no leaks are possible
+==3887149== 
+==3887149== For lists of detected and suppressed errors, rerun with: -s
+==3887149== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

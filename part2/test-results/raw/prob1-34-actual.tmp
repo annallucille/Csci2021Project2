@@ -9,3 +9,9 @@ batt = {
   .mode    = 1
 }
 
+result = set_display_from_batt(batt, &display);
+result: 0
+display is
+bits:  000 01111 0000000 0000111 1101101 001
+index:  29    24      17      10       3   0
+
