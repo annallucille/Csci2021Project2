@@ -10,3 +10,18 @@
     print_batt_display();
 }
 ---OUTPUT---
+ret: 0
+
+BATT_VOLTAGE_PORT  : 7291
+BATT_STATUS_PORT   : 000 11011
+BATT_DISPLAY_PORT  : 000 01111 0000000 1111111 0111111 001
+index              :  29    24      17      10       3   0
+
+Display based on BATT_DISPLAY_PORT:
++-^^^-+         ####  ####     
+|     |         #  #  #  #     
+|#####|         #  #  #  #     
+|#####|         ####  #  #     
+|#####|         #  #  #  #  %  
+|#####|         #  #  #  #     
++-----+         ####  ####     

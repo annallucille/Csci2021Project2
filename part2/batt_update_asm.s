@@ -33,7 +33,7 @@ L4:
     jmp L6
 
 L5:
-    movb  $100, 2(%rdi)
+    movb  $100, 2(%rdi)     ## if percent>100 percent=100
     
 L6:
     movb BATT_STATUS_PORT(%rip), %dl  ##stores BATT_STATUS in %dl
@@ -230,9 +230,9 @@ batt_update:
     jg  L32
 
 L31:
-    movq  %rsp, (%rdi)                                          ## call data in stack
-                  ## store batt display addy in rsi
-    call  set_display_from_batt 
+    movq  (%rsp), %rdi                                        ## call data in stack
+    leaq  BATT_DISPLAY_PORT(%rip) , %rsi            ## store batt display addy in rsi
+    call  set_display_from_batt
     addq  $8, %rsp
     ret 
 
