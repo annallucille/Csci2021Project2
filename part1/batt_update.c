@@ -203,7 +203,7 @@ int batt_update() {
     batt_t batt;
     int ret = set_batt_from_ports(&batt);
     if(ret == 0){
-        set_display_from_batt(batt, &BATT_DISPLAY_PORT);
+        ret = set_display_from_batt(batt, &BATT_DISPLAY_PORT);
     }
     return ret;
 }

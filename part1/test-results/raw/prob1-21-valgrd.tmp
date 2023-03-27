@@ -1,15 +1,15 @@
-==673555== Memcheck, a memory error detector
-==673555== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==673555== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==673555== Command: ./test_batt_update set_display_from_batt()\ level\ 1
-==673555== Parent PID: 673554
-==673555== 
-==673555== 
-==673555== HEAP SUMMARY:
-==673555==     in use at exit: 0 bytes in 0 blocks
-==673555==   total heap usage: 1 allocs, 1 frees, 4 bytes allocated
-==673555== 
-==673555== All heap blocks were freed -- no leaks are possible
-==673555== 
-==673555== For lists of detected and suppressed errors, rerun with: -s
-==673555== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==4065127== Memcheck, a memory error detector
+==4065127== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4065127== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==4065127== Command: ./test_batt_update set_display_from_batt()\ level\ 1
+==4065127== Parent PID: 4065126
+==4065127== 
+==4065127== 
+==4065127== HEAP SUMMARY:
+==4065127==     in use at exit: 0 bytes in 0 blocks
+==4065127==   total heap usage: 1 allocs, 1 frees, 4 bytes allocated
+==4065127== 
+==4065127== All heap blocks were freed -- no leaks are possible
+==4065127== 
+==4065127== For lists of detected and suppressed errors, rerun with: -s
+==4065127== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
