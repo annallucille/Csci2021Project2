@@ -223,19 +223,18 @@ both:
 
 # ENTRY POINT FOR REQUIRED FUNCTION
 batt_update:
-    subq  $8, %rsp
-    movq  %rsp, %rdi
-    call  set_batt_from_ports
-    cmpl  $0, %eax
+    pushq $0
+    movq %rsp, %rdi
+    call set_batt_from_ports
+    cmpl $0, %eax
     jg  L32
 
 L31:
-    movq  %rsp, (%rdi)                                          ## call data in stack
-                  ## store batt display addy in rsi
-    call  set_display_from_batt 
-    addq  $8, %rsp
-    ret 
+    movl (%rsp), %edi                                  ## call data in stack
+    leal BATT_DISPLAY_PORT(%rip), %esi                                                        ## store batt display addy in rsi
+    call  set_display_from_batt
 
 L32:
-    addq  $8, %rsp
+    popq %rdi
     ret
+
